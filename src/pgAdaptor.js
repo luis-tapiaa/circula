@@ -1,8 +1,10 @@
+require('dotenv').config();
 const pgPromise = require('pg-promise');
 const pgp = pgPromise({});
 
 const config = {
-    connectionString: "postgres://earbgjdo:Vbgz3QxOQjbHY04_gZS7R20LfUQZ68BZ@lallah.db.elephantsql.com:5432/earbgjdo"
+    connectionString: process.env.POSTGRES_URL,
+    ssl: { rejectUnauthorized: false }
 };
 
 const db = pgp(config);
