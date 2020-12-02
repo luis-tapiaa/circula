@@ -3,7 +3,7 @@ const bibliotecas = require("./loaders/bibliotecas");
 const resolvers = {
   Query: {
     item: (_, { codigo }, { db }) =>
-      db.one("SELECT * FROM v_items WHERE codigo=$1", codigo),
+      db.one("SELECT * FROM items WHERE codigo=$1", codigo),
   },
   Mutation: {
     addItem: (_, { input }, { db }) =>
