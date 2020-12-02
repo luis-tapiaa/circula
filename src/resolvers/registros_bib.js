@@ -34,7 +34,7 @@ const resolvers = {
         .then((res) => res.rowCount),
   },
   Registro: {
-      items: (_, args, { db }) => db.any('SELECT * FROM items WHERE registro_bib_id=$1', _.id)
+      items: (_, args, { db }) => db.any('SELECT * FROM v_items WHERE registro_bib_id=$1', _.id)
   }
 };
 
