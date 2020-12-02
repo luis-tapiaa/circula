@@ -19,6 +19,8 @@ const root = gql`
     filter: String
   }
 
+  scalar Date
+
   type Query {
     ${bibliotecas.queries}
     ${grupos_usuario.queries}

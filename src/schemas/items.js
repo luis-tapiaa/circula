@@ -1,11 +1,12 @@
 const { gql } = require("apollo-server");
 
-const types = gql`
+const types = gql`  
+
   type Item {
     id: ID!
     codigo: String
     registro: Registro,
-    f_adquisicion: String
+    f_adquisicion: Date
     estado_item: String
     ubicacion: String
     precio: Float

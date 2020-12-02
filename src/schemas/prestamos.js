@@ -6,9 +6,9 @@ const types = gql`
   type Prestamo {
     id: ID!
     item: Item   
-    f_prestamo: String
-    f_vencimiento: String
-    f_devolucion: String
+    f_prestamo: Date
+    f_vencimiento: Date
+    f_devolucion: Date
     renovaciones: Int
   }
 

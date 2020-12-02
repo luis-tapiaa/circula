@@ -15,13 +15,13 @@ const types = gql`
     a_paterno: String
     a_materno: String
     nombre: String
-    f_nacimiento: String
+    f_nacimiento: Date
     genero: String
     biblioteca: Biblioteca
     grupo_usuario: GrupoUsuario
     direcciones: [Direccion]!
-    f_registro: String
-    f_vencimiento: String
+    f_registro: Date
+    f_vencimiento: Date
     email: String
     telefono: String
     celular: String
