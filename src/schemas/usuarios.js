@@ -1,8 +1,13 @@
 const { gql } = require("apollo-server");
 
 const types = gql`
+  type UsuarioOutput {
+    usuarios: [Usuario]!
+    total: Int
+  }
+
   scalar File
-  scalar Log  
+  scalar Log
 
   type Auth {
     token: String
@@ -55,7 +60,7 @@ const types = gql`
 const queries = `
   login(usuario: String!, password: String!): Auth
   verificar(token: String): Usuario
-  usuarios(input: FilterInput): [Usuario]!
+  usuarios(input: FilterInput): UsuarioOutput
   usuario(id: ID, codigo: String): Usuario
 `;
 

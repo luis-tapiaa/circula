@@ -24,21 +24,33 @@ const resolvers = {
     },
     verificar: (_, { token }, { db }) => {
       const res = jwt.verify(token, process.env.TOKEN_KEY);
-      return db.one('SELECT * FROM usuarios WHERE id=$1', [res.id]);
+      return db.one("SELECT * FROM usuarios WHERE id=$1", [res.id]);
     },
     usuarios: (_, { input }, { db }) => {
       const { limit = 5, offset = 0, filter } = input || {};
+      let usuarios = [];
+      let total = 0;
       if (filter) {
-        return db.any(
+        total = db
+          .one("SELECT COUNT(*) AS total FROM usuarios WHERE " + filter)
+          .then((res) => parseInt(res.total, 10));
+        usuarios = db.any(
           "SELECT * FROM usuarios WHERE " + filter + " LIMIT $1 OFFSET $2",
           [limit, offset]
         );
       } else {
-        return db.any("SELECT * FROM usuarios LIMIT $1 OFFSET $2", [
+        total = db
+          .one("SELECT COUNT(*) AS total FROM usuarios")
+          .then((res) => parseInt(res.total, 10));
+        usuarios = db.any("SELECT * FROM usuarios LIMIT $1 OFFSET $2", [
           limit,
           offset,
-        ]);
+        ]);        
       }
+      return {
+        usuarios,
+        total,
+      };
     },
     usuario: (_, { id, codigo }, { db }) =>
       db.one("SELECT * FROM usuarios WHERE id=$1 OR codigo=$2", [id, codigo]),
@@ -60,7 +72,10 @@ const resolvers = {
     biblioteca: (_) => bibliotecas.load(_.biblioteca_id),
     grupo_usuario: (_) => grupos_usuario.load(_.grupo_usuario_id),
     foto: (_, args, { db }) =>
-      db.one("SELECT encode(img, 'base64') FROM usuarios_imagen WHERE usuario_id=$1", _.id),
+      db.one(
+        "SELECT encode(img, 'base64') FROM usuarios_imagen WHERE usuario_id=$1",
+        _.id
+      ),
     direcciones: (_, args, { db }) =>
       db.any("SELECT * FROM direcciones WHERE usuario_id =$1", _.id),
     prestamos: (_, args, { db }) =>

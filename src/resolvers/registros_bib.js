@@ -2,17 +2,31 @@ const resolvers = {
   Query: {
     registros: (_, { input }, { db }) => {
       const { limit = 5, offset = 0, filter } = input || {};
+      let registros = [];
+      let total = 0;     
+
       if (filter) {
-        return db.any(
+        total = db
+          .one("SELECT COUNT(*) AS total FROM registros_bib WHERE " + filter)
+          .then((res) => parseInt(res.total, 10));
+        registros = db.any(
           "SELECT * FROM registros_bib WHERE " + filter + " LIMIT $1 OFFSET $2",
           [limit, offset]
-        );
+        );        
       } else {
-        return db.any("SELECT * FROM registros_bib LIMIT $1 OFFSET $2", [
+        total = db
+          .one("SELECT COUNT(*) AS total FROM registros_bib")
+          .then((res) => parseInt(res.total, 10));
+        registros = db.any("SELECT * FROM registros_bib LIMIT $1 OFFSET $2", [
           limit,
           offset,
-        ]);
+        ]);      
       }
+
+      return {
+        registros,
+        total
+      };
     },
     registro: (_, { id }, { db }) =>
       db.one("SELECT * FROM registros_bib WHERE id=$1", id),
@@ -34,8 +48,9 @@ const resolvers = {
         .then((res) => res.rowCount),
   },
   Registro: {
-      items: (_, args, { db }) => db.any('SELECT * FROM items WHERE registro_bib_id=$1', _.id)
-  }
+    items: (_, args, { db }) =>
+      db.any("SELECT * FROM items WHERE registro_bib_id=$1", _.id),
+  },
 };
 
 module.exports = resolvers;

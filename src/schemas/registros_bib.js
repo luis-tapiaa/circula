@@ -1,6 +1,11 @@
 const { gql } = require("apollo-server");
 
 const types = gql`
+  type RegistroOutput {
+    registros: [Registro]!
+    total: Int
+  }
+
   type Registro {
     id: ID!
     marc: JSON
@@ -13,7 +18,7 @@ const types = gql`
 `;
 
 const queries = `
-  registros(input: FilterInput): [Registro]!
+  registros(input: FilterInput): RegistroOutput
   registro(id: ID): Registro
 `;
 
