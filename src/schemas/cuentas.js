@@ -21,9 +21,9 @@ const types = gql`
 `;
 
 const mutations = `
-  addCuenta(input: CuentaInput): Cuenta
+  createCuenta(input: CuentaInput): Cuenta
   updateCuenta(id: ID!, input: CuentaInput): Cuenta
-  dropCuenta(id: ID): Int
+  deleteCuenta(id: ID): Int
 `;
 
 module.exports = { types, mutations };

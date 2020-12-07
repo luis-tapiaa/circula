@@ -21,9 +21,9 @@ const types = gql`
 `;
 
 const mutations = `
-  addDireccion(input: DireccionInput): Direccion
+  createDireccion(input: DireccionInput): Direccion
   updateDireccion(id: ID!, input: DireccionInput): Direccion
-  dropDireccion(id: ID): Int
+  deleteDireccion(id: ID): Int
 `;
 
 module.exports = { types, mutations };

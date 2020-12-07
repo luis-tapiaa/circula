@@ -29,9 +29,9 @@ const queries = `
 `;
 
 const mutations = `
-  addItem(input: ItemInput): Item
+  createItem(input: ItemInput): Item
   updateItem(id: ID!, input: ItemInput): Item
-  dropItem(id: ID): Int
+  deleteItem(id: ID): Int
 `;
 
 module.exports = { types, queries, mutations };

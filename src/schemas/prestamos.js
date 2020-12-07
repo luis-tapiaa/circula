@@ -27,9 +27,9 @@ const queries = `
 `;
 
 const mutations = `
-  addPrestamo(input: PrestamoInput): Prestamo
+  createPrestamo(input: PrestamoInput): Prestamo
   updatePrestamo(id: ID!, input: PrestamoInput): Prestamo
-  dropPrestamo(id: ID): Int
+  deletePrestamo(id: ID): Int
 `;
 
 module.exports = { types, queries, mutations };

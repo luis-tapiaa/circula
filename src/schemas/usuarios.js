@@ -7,7 +7,6 @@ const types = gql`
   }
 
   scalar File
-  scalar Log
 
   type Auth {
     token: String
@@ -65,10 +64,9 @@ const queries = `
 `;
 
 const mutations = `
-  addUsuario(input: UsuarioInput): Usuario
+  createUsuario(input: UsuarioInput): Usuario
   updateUsuario(id: ID!, input: UsuarioInput): Usuario
-  dropUsuario(id: ID): Int
-  loadUsuariosk(file: File): Log
+  deleteUsuario(id: ID): Int
 `;
 
 module.exports = { types, queries, mutations };

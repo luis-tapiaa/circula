@@ -36,9 +36,9 @@ const queries = `
 `;
 
 const mutations = `
-  addPolitica(input: PoliticaInput): Politica
+  createPolitica(input: PoliticaInput): Politica
   updatePolitica(id: ID!, input: PoliticaInput): Politica
-  dropPolitica(id: ID): Int
+  deletePolitica(id: ID): Int
 `;
 
 module.exports = { types, queries, mutations };

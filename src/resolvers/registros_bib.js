@@ -1,51 +1,26 @@
 const resolvers = {
   Query: {
     registros: (_, { input }, { db }) => {
-      const { limit = 5, offset = 0, filter } = input || {};
-      let registros = [];
-      let total = 0;     
-
-      if (filter) {
-        total = db
-          .one("SELECT COUNT(*) AS total FROM registros_bib WHERE " + filter)
-          .then((res) => parseInt(res.total, 10));
-        registros = db.any(
-          "SELECT * FROM registros_bib WHERE " + filter + " LIMIT $1 OFFSET $2",
-          [limit, offset]
-        );        
-      } else {
-        total = db
-          .one("SELECT COUNT(*) AS total FROM registros_bib")
-          .then((res) => parseInt(res.total, 10));
-        registros = db.any("SELECT * FROM registros_bib LIMIT $1 OFFSET $2", [
-          limit,
-          offset,
-        ]);      
-      }
-
+      const { limit = 5, offset = 0, filter = "", sort = "" } = input || {};
+      
       return {
-        registros,
-        total
+        registros: db.any("SELECT * FROM registros_bib " + filter + " " + sort
+          + " LIMIT $1 OFFSET $2", [limit, offset]),
+        total: db.one("SELECT COUNT(*) AS total FROM registros_bib " + filter)
+          .then((res) => parseInt(res.total, 10))
       };
     },
     registro: (_, { id }, { db }) =>
       db.one("SELECT * FROM registros_bib WHERE id=$1", id),
   },
   Mutation: {
-    addRegistro: (_, { input }, { db }) =>
-      db.one(
-        "INSERT INTO registros_bib(${this:name}) VALUES(${this:csv}) RETURNING *",
-        input
-      ),
+    createRegistro: (_, { input }, { db }) =>
+      db.one("INSERT INTO registros_bib(${this:name}) VALUES(${this:csv}) RETURNING *", input),
     updateRegistro: (_, { id, input }, { db, update }) =>
-      db.one(
-        update(input, null, "registros_bib") + " WHERE id=$1 RETURNING *",
-        id
-      ),
-    dropRegistro: (_, { id }, { db }) =>
-      db
-        .result("DELETE FROM registros_bib WHERE id=$1", id)
-        .then((res) => res.rowCount),
+      db.one(update(input, null, "registros_bib") + " WHERE id=$1 RETURNING *", id),
+    deleteRegistro: (_, { id }, { db }) =>
+      db.result("DELETE FROM registros_bib WHERE id=$1", id)
+        .then(res => res.rowCount),
   },
   Registro: {
     items: (_, args, { db }) =>

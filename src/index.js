@@ -1,6 +1,6 @@
-require('dotenv').config();
+require("dotenv").config();
 const { ApolloServer } = require("apollo-server");
-const { db, getFields, update } = require("./pgAdaptor");
+const { db, update } = require("./pgAdaptor");
 
 const typeDefs = require("./schemas");
 const resolvers = require("./resolvers");
@@ -9,7 +9,7 @@ const server = new ApolloServer({
   typeDefs,
   resolvers,
   context: () => {
-    return { db, getFields, update };
+    return { db, update };
   },
 });
 

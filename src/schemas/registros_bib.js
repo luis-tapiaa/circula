@@ -23,11 +23,9 @@ const queries = `
 `;
 
 const mutations = `
-  addRegistro(input: RegistroInput): Registro
+  createRegistro(input: RegistroInput): Registro
   updateRegistro(id: ID!, input: RegistroInput): Registro
-  dropRegistro(id: ID): Int
-  loadRegistros(file: File): Log
-  loadItems(file: File): Log
+  deleteRegistro(id: ID): Int
 `;
 
 module.exports = { types, queries, mutations };

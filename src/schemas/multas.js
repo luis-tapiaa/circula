@@ -22,9 +22,9 @@ const queries = `
 `;
 
 const mutations = `
-  addMulta(input: MultaInput): Multa
+  createMulta(input: MultaInput): Multa
   updateMulta(id: ID!, input: MultaInput): Multa
-  dropMulta(id: ID): Int
+  deleteMulta(id: ID): Int
 `;
 
 module.exports = { types, queries, mutations };

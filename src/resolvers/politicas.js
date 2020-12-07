@@ -7,42 +7,21 @@ const resolvers = {
     politicas: (_, args, { db }) => db.any("SELECT * FROM politicas"),
   },
   Mutation: {
-    addPolitica: (_, { input }, { db }) =>
-      db.one(
-        "INSERT INTO politicas(${this:name}) VALUES(${this:csv}) RETURNING *",
-        input
-      ),
+    createPolitica: (_, { input }, { db }) =>
+      db.one("INSERT INTO politicas(${this:name}) VALUES(${this:csv}) RETURNING *", input),
     updatePolitica: (_, { input, id }, { db, update }) =>
-      db
-        .one(update(input, null, "politicas") + " WHERE id=$1 RETURNING *", id)
-        .then((res) => res),
-    dropPolitica: (_, { id }, { db }) =>
-      db
-        .result("DELETE FROM politicas WHERE id=$1", id)
-        .then((res) => res.rowCount),
+      db.one(update(input, null, "politicas") + " WHERE id=$1 RETURNING *", id),
+    deletePolitica: (_, { id }, { db }) =>
+      db.result("DELETE FROM politicas WHERE id=$1", id)
+        .then(res => res.rowCount),
   },
   Politica: {
-    biblioteca: (_) => {
-      if (_.biblioteca_id) {
-        return bibliotecas.load(_.biblioteca_id);
-      } else {
-        return null;
-      }
-    },
-    grupo_usuario: (_) => {
-      if (_.grupo_usuario_id) {
-        return grupos_usuario.load(_.grupo_usuario_id);
-      } else {
-        return null;
-      }
-    },
-    tipo_item: (_) => {
-      if (_.tipo_item_id) {
-        return tipos_item.load(_.tipo_item_id);
-      } else {
-        return null;
-      }
-    },
+    biblioteca: ({ biblioteca_id }) =>
+      biblioteca_id ? bibliotecas.load(biblioteca_id) : null,
+    grupo_usuario: ({ grupo_usuario_id }) =>
+      grupo_usuario_id ? grupos_usuario.load(grupo_usuario_id) : null,
+    tipo_item: ({ tipo_item_id }) =>
+      tipo_item_id ? tipos_item.load() : null
   },
 };
 

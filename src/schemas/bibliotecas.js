@@ -20,9 +20,9 @@ const queries = `
 `;
 
 const mutations = `
-  addBiblioteca(input: BibliotecaInput): Biblioteca
+  createBiblioteca(input: BibliotecaInput): Biblioteca
   updateBiblioteca(id: ID!, input: BibliotecaInput): Biblioteca
-  dropBiblioteca(id: ID): Int
+  deleteBiblioteca(id: ID): Int
 `;
 
 module.exports = { types, queries, mutations };

@@ -20,9 +20,9 @@ const queries = `
 `;
 
 const mutations = `
-  addGrupoUsuario(input: GrupoUsuarioInput): GrupoUsuario
+  createGrupoUsuario(input: GrupoUsuarioInput): GrupoUsuario
   updateGrupoUsuario(id: ID!, input: GrupoUsuarioInput): GrupoUsuario
-  dropGrupoUsuario(id: ID): Int
+  deleteGrupoUsuario(id: ID): Int
 `;
 
 module.exports = { types, queries, mutations };

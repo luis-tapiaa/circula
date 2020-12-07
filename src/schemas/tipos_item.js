@@ -22,9 +22,9 @@ const queries = `
 `;
 
 const mutations = `
-  addTipoItem(input: TipoItemInput): TipoItem
+  createTipoItem(input: TipoItemInput): TipoItem
   updateTipoItem(id: ID!, input: TipoItemInput): TipoItem
-  dropTipoItem(id: ID): Int
+  deleteTipoItem(id: ID): Int
 `;
 
 module.exports = { types, queries, mutations };

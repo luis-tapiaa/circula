@@ -17,6 +17,7 @@ const root = gql`
     limit: Int
     offset: Int
     filter: String
+    sort: String
   }
 
   scalar Date
