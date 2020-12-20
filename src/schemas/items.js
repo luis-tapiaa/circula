@@ -10,7 +10,7 @@ const types = gql`
     estado_item: String
     ubicacion: String
     precio: Float
-    biblioteca: Biblioteca
+    biblioteca: Biblioteca    
   }
 
   input ItemInput {

@@ -16,6 +16,9 @@ const resolvers = {
   },
   Item: {
     biblioteca: (_) => bibliotecas.load(_.biblioteca_id),
+    registro: ({ registro_bib_id }, args, { db }) => {
+      return db.one("SELECT * FROM registros_bib WHERE id=$1", registro_bib_id);
+    }
   },
 };
 
