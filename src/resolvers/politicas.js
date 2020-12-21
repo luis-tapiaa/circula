@@ -21,7 +21,7 @@ const resolvers = {
     grupo_usuario: ({ grupo_usuario_id }) =>
       grupo_usuario_id ? grupos_usuario.load(grupo_usuario_id) : null,
     tipo_item: ({ tipo_item_id }) =>
-      tipo_item_id ? tipos_item.load() : null
+      tipo_item_id ? tipos_item.load(tipo_item_id) : null
   },
 };
 
