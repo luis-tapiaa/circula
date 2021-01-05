@@ -11,6 +11,7 @@ const server = new ApolloServer({
   context: () => {
     return { db, update };
   },
+  playground: true,
 });
 
 server.listen({ port: process.env.PORT || 3000 }).then(({ url }) => {
