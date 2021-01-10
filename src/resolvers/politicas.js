@@ -12,8 +12,7 @@ const resolvers = {
     updatePolitica: (_, { input, id }, { db, update }) =>
       db.one(update(input, null, "politicas") + " WHERE id=$1 RETURNING *", id),
     deletePolitica: (_, { id }, { db }) =>
-      db.result("DELETE FROM politicas WHERE id=$1", id)
-        .then(res => res.rowCount),
+      db.one("DELETE FROM politicas WHERE id=$1 RETURNING id", id)
   },
   Politica: {
     biblioteca: ({ biblioteca_id }) =>

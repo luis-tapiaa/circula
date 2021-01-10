@@ -20,10 +20,4 @@ const types = gql`
   }
 `;
 
-const mutations = `
-  createDireccion(input: DireccionInput): Direccion
-  updateDireccion(id: ID!, input: DireccionInput): Direccion
-  deleteDireccion(id: ID): Int
-`;
-
-module.exports = { types, mutations };
+module.exports = { types };

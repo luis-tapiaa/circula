@@ -24,7 +24,7 @@ const queries = `
 const mutations = `
   createMulta(input: MultaInput): Multa
   updateMulta(id: ID!, input: MultaInput): Multa
-  deleteMulta(id: ID): Int
+  deleteMulta(id: ID): Multa
 `;
 
 module.exports = { types, queries, mutations };

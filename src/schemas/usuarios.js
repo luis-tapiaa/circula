@@ -1,13 +1,6 @@
 const { gql } = require("apollo-server");
 
 const types = gql`
-  type UsuarioOutput {
-    usuarios: [Usuario]!
-    total: Int
-  }
-
-  scalar File
-
   type Auth {
     token: String
     usuario: Usuario
@@ -52,6 +45,7 @@ const types = gql`
     celular: String
     usuario: String
     password: String
+    direcciones: [DireccionInput]
     foto: Upload
   }
 `;
@@ -59,14 +53,14 @@ const types = gql`
 const queries = `
   login(usuario: String!, password: String!): Auth
   verificar(token: String): Usuario
-  usuarios(input: FilterInput): UsuarioOutput
+  usuarios(input: FilterInput): [Usuario]
   usuario(id: ID, codigo: String): Usuario
 `;
 
 const mutations = `
   createUsuario(input: UsuarioInput): Usuario
   updateUsuario(id: ID!, input: UsuarioInput): Usuario
-  deleteUsuario(id: ID): Int
+  deleteUsuario(id: ID): Usuario
 `;
 
 module.exports = { types, queries, mutations };

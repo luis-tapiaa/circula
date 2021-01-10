@@ -24,24 +24,49 @@ const resolvers = {
     usuarios: (_, { input }, { db }) => {
       const { limit = 5, offset = 0, filter = "", sort = "" } = input || {};
       
-      return {
-        usuarios: db.any("SELECT * FROM usuarios " + filter + " " + sort
-          + " LIMIT $1 OFFSET $2", [limit, offset]),
-        total: db.one("SELECT COUNT(*) AS total FROM usuarios " + filter)
-          .then(res => parseInt(res.total, 10))
-      };
+      return db.any("SELECT * FROM usuarios " + filter + " " + sort
+        + " LIMIT $1 OFFSET $2", [limit, offset]);
     },
     usuario: (_, { id, codigo }, { db }) =>
       db.one("SELECT * FROM usuarios WHERE id=$1 OR codigo=$2", [id, codigo]),
   },
   Mutation: {
-    createUsuario: (_, { input }, { db }) =>
-      db.one("INSERT INTO usuarios(${this:name}) VALUES(${this:csv}) RETURNING *", input),
-    updateUsuario: (_, { id, input }, { db, update }) =>
-      db.one(update(input, null, "usuarios") + " WHERE id=$1 RETURNING *", id),
-    deleteUsuario: (_, { id }, { db }) =>
-      db.result("DELETE FROM usuarios WHERE id=$1", id)
-        .then((res) => res.rowCount),
+    createUsuario: (_, { input }, { db }) => {
+      const { direcciones, foto, ...user} = input;
+
+      return db.tx(t => {
+        return db.one("INSERT INTO usuarios(${this:name}) VALUES(${this:csv}) RETURNING *", user)
+          .then(usuario => {
+            direcciones.forEach(dir => {
+              db.none("INSERT INTO direcciones(${this:name}) VALUES(${this:csv})", { ...dir, usuario_id: usuario.id });
+            });
+            return t.batch([usuario]);
+          });
+      }).then(res => res[0]);
+    },
+    updateUsuario: (_, { id, input }, { db, update }) => {
+      const { direcciones, foto, ...user} = input;
+    
+      return db.one(update(user, null, "usuarios") + " WHERE id=$1 RETURNING *", id)
+        .then(usuario => {
+          if(direcciones) {
+            db.none("DELETE FROM direcciones WHERE usuario_id=$1", id)
+              .then(() => {
+                direcciones.forEach(dir => {
+                  db.none("INSERT INTO direcciones(${this:name}) VALUES(${this:csv})", { ...dir, usuario_id: id });
+                });
+              });
+          }
+
+          return usuario;
+        });
+    },
+    deleteUsuario: (_, { id }, { db }) => {
+	return db.none("DELETE FROM direcciones WHERE usuario_id=$1", id)
+          .then(() =>
+            db.one("DELETE FROM usuarios WHERE id=$1 RETURNING id", id)
+          );
+    }
   },
   Usuario: {
     biblioteca: (_) => bibliotecas.load(_.biblioteca_id),

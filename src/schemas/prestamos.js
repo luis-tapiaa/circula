@@ -1,8 +1,6 @@
 const { gql } = require("apollo-server");
 
 const types = gql`
-  scalar JSON
-
   type Prestamo {
     id: ID!
     item: Item   
@@ -22,14 +20,10 @@ const types = gql`
   }
 `;
 
-const queries = `
-  prestamo(codigo: String): Prestamo
-`;
-
 const mutations = `
   createPrestamo(input: PrestamoInput): Prestamo
-  updatePrestamo(id: ID!, input: PrestamoInput): Prestamo
-  deletePrestamo(id: ID): Int
+  renewPrestamo(id: ID!, input: PrestamoInput): Prestamo
+  returnPrestamo(id: ID!, input: PrestamoInput): Prestamo
 `;
 
-module.exports = { types, queries, mutations };
+module.exports = { types, mutations };

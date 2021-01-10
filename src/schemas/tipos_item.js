@@ -24,7 +24,7 @@ const queries = `
 const mutations = `
   createTipoItem(input: TipoItemInput): TipoItem
   updateTipoItem(id: ID!, input: TipoItemInput): TipoItem
-  deleteTipoItem(id: ID): Int
+  deleteTipoItem(id: ID): TipoItem
 `;
 
 module.exports = { types, queries, mutations };

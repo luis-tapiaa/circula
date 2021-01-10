@@ -10,8 +10,7 @@ const resolvers = {
     updateMulta: (_, { input, id }, { db, update }) =>
       db.one(update(input, null, "multas") + " WHERE id=$1 RETURNING *", id),
     deleteMulta: (_, { id }, { db }) =>
-      db.result("DELETE FROM multas WHERE id=$1", id)
-        .then(res => res.rowCount),
+      db.one("DELETE FROM multas WHERE id=$1 RETURNING id", id)
   },
   Multa: {
     biblioteca: ({ biblioteca_id }) =>

@@ -23,7 +23,6 @@ const types = gql`
 const mutations = `
   createCuenta(input: CuentaInput): Cuenta
   updateCuenta(id: ID!, input: CuentaInput): Cuenta
-  deleteCuenta(id: ID): Int
 `;
 
 module.exports = { types, mutations };

@@ -1,7 +1,6 @@
 const { gql } = require("apollo-server");
 
 const types = gql`  
-
   type Item {
     id: ID!
     codigo: String
@@ -31,7 +30,7 @@ const queries = `
 const mutations = `
   createItem(input: ItemInput): Item
   updateItem(id: ID!, input: ItemInput): Item
-  deleteItem(id: ID): Int
+  deleteItem(id: ID): Item
 `;
 
 module.exports = { types, queries, mutations };

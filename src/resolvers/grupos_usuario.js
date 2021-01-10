@@ -10,8 +10,7 @@ const resolvers = {
     updateGrupoUsuario: (_, { input, id }, { db, update }) =>
       db.one(update(input, null, "grupos_usuario") + " WHERE id=$1 RETURNING *", id),
     deleteGrupoUsuario: (_, { id }, { db }) =>
-      db.result("DELETE FROM grupos_usuario WHERE id=$1", id)
-        .then((res) => res.rowCount),
+      db.one("DELETE FROM grupos_usuario WHERE id=$1 RETURNING id", id)
   },
   GrupoUsuario: {
     biblioteca: ({ biblioteca_id }) =>

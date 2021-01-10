@@ -22,7 +22,7 @@ const queries = `
 const mutations = `
   createGrupoUsuario(input: GrupoUsuarioInput): GrupoUsuario
   updateGrupoUsuario(id: ID!, input: GrupoUsuarioInput): GrupoUsuario
-  deleteGrupoUsuario(id: ID): Int
+  deleteGrupoUsuario(id: ID): GrupoUsuario
 `;
 
 module.exports = { types, queries, mutations };

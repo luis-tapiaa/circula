@@ -38,7 +38,7 @@ const queries = `
 const mutations = `
   createPolitica(input: PoliticaInput): Politica
   updatePolitica(id: ID!, input: PoliticaInput): Politica
-  deletePolitica(id: ID): Int
+  deletePolitica(id: ID): Politica
 `;
 
 module.exports = { types, queries, mutations };

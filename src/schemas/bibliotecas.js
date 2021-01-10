@@ -22,7 +22,7 @@ const queries = `
 const mutations = `
   createBiblioteca(input: BibliotecaInput): Biblioteca
   updateBiblioteca(id: ID!, input: BibliotecaInput): Biblioteca
-  deleteBiblioteca(id: ID): Int
+  deleteBiblioteca(id: ID): Biblioteca
 `;
 
 module.exports = { types, queries, mutations };

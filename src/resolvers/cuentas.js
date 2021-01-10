@@ -7,9 +7,6 @@ const resolvers = {
       db.one("INSERT INTO cuentas(${this:name}) VALUES(${this:csv}) RETURNING *", input),
     updateCuenta: (_, { input, id }, { db, update }) =>
       db.one(update(input, null, "cuentas") + " WHERE id=$1 RETURNING *", id),
-    deleteCuenta: (_, { id }, { db }) =>
-      db.result("DELETE FROM cuentas WHERE id=$1", id)
-        .then(res => res.rowCount),
   },
   Cuenta: {
     multa: ({ multa_id }) => 

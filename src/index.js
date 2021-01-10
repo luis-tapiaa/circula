@@ -8,9 +8,7 @@ const resolvers = require("./resolvers");
 const server = new ApolloServer({
   typeDefs,
   resolvers,
-  context: () => {
-    return { db, update };
-  },
+  context: () => ({ db, update }),
   playground: true,
 });
 

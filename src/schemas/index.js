@@ -21,6 +21,8 @@ const root = gql`
   }
 
   scalar Date
+  scalar File
+  scalar JSON
 
   type Query {
     ${bibliotecas.queries}
@@ -28,7 +30,6 @@ const root = gql`
     ${items.queries}
     ${multas.queries}
     ${politicas.queries}
-    ${prestamos.queries}
     ${registros.queries}
     ${tipos_item.queries}
     ${usuarios.queries}
@@ -37,7 +38,6 @@ const root = gql`
   type Mutation {
     ${bibliotecas.mutations}
     ${cuentas.mutations}
-    ${direcciones.mutations}
     ${grupos_usuario.mutations}
     ${items.mutations}
     ${multas.mutations}

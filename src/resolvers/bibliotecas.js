@@ -8,8 +8,7 @@ const resolvers = {
     updateBiblioteca: (_, { id, input }, { db, update }) =>
       db.one(update(input, null, "bibliotecas") + " WHERE id=$1 RETURNING *", id),
     deleteBiblioteca: (_, { id }, { db }) =>
-      db.result("DELETE FROM bibliotecas WHERE id=$1", id)
-        .then((res) => res.rowCount),
+      db.one("DELETE FROM bibliotecas WHERE id=$1 RETURNING id", id)
   },
 };
 

@@ -8,8 +8,7 @@ const resolvers = {
     updateTipoItem: (_, { id, input }, { db, update }) =>
       db.one(update(input, null, "tipos_item") + " WHERE id=$1 RETURNING *", id),
     deleteTipoItem: (_, { id }, { db }) =>
-      db.result("DELETE FROM tipos_item WHERE id=$1", id)
-        .then(res => res.rowCount),
+      db.one("DELETE FROM tipos_item WHERE id=$1 RETURNING id", id)
   },
 };
 

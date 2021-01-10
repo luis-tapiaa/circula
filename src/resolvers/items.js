@@ -11,8 +11,7 @@ const resolvers = {
     updateItem: (_, { id, input }, { db, update }) =>
       db.one(update(input, null, "items") + " WHERE id=$1 RETURNING *", id),
     deleteItem: (_, { id }, { db }) =>
-      db.result("DELETE FROM items WHERE id=$1", id)
-        .then(res => res.rowCount),
+      db.one("DELETE FROM items WHERE id=$1 RETURNING id", id)
   },
   Item: {
     biblioteca: (_) => bibliotecas.load(_.biblioteca_id),
