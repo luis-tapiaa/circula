@@ -13,7 +13,7 @@ const types = gql`
     codigo: String
     nombre: String
     costo_prestamo: Float
-    disponible_prestamo: Boolean
+    disponible_prestamo: String
   }
 `;
 
