@@ -1,4 +1,5 @@
 const bibliotecas = require("./bibliotecas");
+const bloqueos = require("./bloqueos");
 const cuentas = require("./cuentas");
 const grupos_usuario = require("./grupos_usuario");
 const items = require('./items');
@@ -11,6 +12,7 @@ const usuarios = require("./usuarios");
 
 const resolvers = [
     bibliotecas,
+    bloqueos,
     cuentas,
     grupos_usuario,
     items,

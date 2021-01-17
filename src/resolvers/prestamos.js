@@ -12,14 +12,14 @@ const resolvers = {
       }).then(res => res[0]),
     renewPrestamo: (_, { input, id }, { db, update }) =>
       db.one(update(input, null, "prestamos") + " WHERE id=$1 RETURNING *", id),    
-    returnPrestamo: (_, { input, id }, { db }) =>
+    returnPrestamo: (_, { input, codigo }, { db }) =>
       db.tx(t => {
-        return t.one("UPDATE prestamos SET f_devolucion=$1 WHERE id=$2 RETURNING *", [input.f_devolucion, id])
-          .then(loan => {
-            const q2 = t.one("UPDATE items SET estado_item='Disponible' WHERE id=$1 RETURNING *", loan.item_id);
-            return t.batch([loan]);
+        return t.one("UPDATE items SET estado_item='Disponible' WHERE codigo=$1 RETURNING *", codigo)
+          .then(item => {
+            const query = t.one("UPDATE prestamos SET f_devolucion=$1 WHERE item_id=$2 AND f_devolucion IS NULL RETURNING *", [input.f_devolucion, item.id]);
+            return t.batch([query]);
           });
-      }).then(res => res[0])
+      }).then(res => res[0]),
   },
   Prestamo: {
     item: ({ item_id }) => (item_id ? items.load(item_id) : null),

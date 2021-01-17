@@ -23,7 +23,7 @@ const types = gql`
 const mutations = `
   createPrestamo(input: PrestamoInput): Prestamo
   renewPrestamo(id: ID!, input: PrestamoInput): Prestamo
-  returnPrestamo(id: ID!, input: PrestamoInput): Prestamo
+  returnPrestamo(codigo: String, input: PrestamoInput): Prestamo
 `;
 
 module.exports = { types, mutations };

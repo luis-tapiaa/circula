@@ -1,6 +1,7 @@
 const { gql } = require("apollo-server");
 
 const bibliotecas = require("./bibliotecas");
+const bloqueos = require("./bloqueos");
 const cuentas = require("./cuentas");
 const direcciones = require("./direcciones");
 const grupos_usuario = require("./grupos_usuario");
@@ -37,6 +38,7 @@ const root = gql`
 
   type Mutation {
     ${bibliotecas.mutations}
+    ${bloqueos.mutations}
     ${cuentas.mutations}
     ${grupos_usuario.mutations}
     ${items.mutations}
@@ -52,6 +54,7 @@ const root = gql`
 const typeDefs = [
   root,
   bibliotecas.types,
+  bloqueos.types,
   cuentas.types,
   direcciones.types,
   grupos_usuario.types,
