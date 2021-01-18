@@ -37,9 +37,11 @@ const resolvers = {
       return db.tx(t => {
         return db.one("INSERT INTO usuarios(${this:name}) VALUES(${this:csv}) RETURNING *", user)
           .then(usuario => {
-            direcciones.forEach(dir => {
-              db.none("INSERT INTO direcciones(${this:name}) VALUES(${this:csv})", { ...dir, usuario_id: usuario.id });
-            });
+            if(direcciones) {
+              direcciones.forEach(dir => {
+                db.none("INSERT INTO direcciones(${this:name}) VALUES(${this:csv})", { ...dir, usuario_id: usuario.id });
+              });
+	    }
             return t.batch([usuario]);
           });
       }).then(res => res[0]);
