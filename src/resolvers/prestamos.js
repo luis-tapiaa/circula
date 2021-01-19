@@ -23,6 +23,8 @@ const resolvers = {
   },
   Prestamo: {
     item: ({ item_id }) => (item_id ? items.load(item_id) : null),
+    usuario: ({ usuario_id }, args, { db }) =>
+      db.one("SELECT * FROM usuarios WHERE id=$1", usuario_id)
   },
 };
 

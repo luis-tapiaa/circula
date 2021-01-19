@@ -8,6 +8,7 @@ const types = gql`
     f_vencimiento: Date
     f_devolucion: Date
     renovaciones: Int
+    usuario: Usuario
   }
 
   input PrestamoInput {
