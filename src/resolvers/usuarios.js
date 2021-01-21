@@ -2,6 +2,27 @@ require("dotenv").config();
 const jwt = require("jsonwebtoken");
 const bibliotecas = require("./loaders/bibliotecas");
 const grupos_usuario = require("./loaders/grupos_usuario");
+const { cloudinary } = require('../utils/cloudinary');
+
+const uploadImage = async(foto)=> {
+  const uploadedResponse = await cloudinary.uploader.upload(foto,{
+    upload_preset: 'devs'
+  });
+  return uploadedResponse;
+}
+
+const deleteImage = async(imgUrl) =>{
+  let exp_reg = /[/]+[A-Za-z0-9]*.(jpg)$/g;
+    let respuesta = imgUrl.match(exp_reg)
+    const id_cloudinary = respuesta[0].substring(1,respuesta[0].length-4);
+    const cloudinary_id = `dev_setups/${id_cloudinary}`;
+    await cloudinary.uploader.destroy(cloudinary_id)
+        .then( respuesta => {
+            console.log(respuesta);
+        }).catch(err =>{
+            console.log(err);
+    });
+}
 
 const resolvers = {
   Query: {
@@ -33,9 +54,12 @@ const resolvers = {
   Mutation: {
     createUsuario: (_, { input }, { db }) => {
       const { direcciones, foto, ...user} = input;
-
+      if(foto){
+        const image = uploadImage(foto);
+        foto = image.url
+      }
       return db.tx(t => {
-        return db.one("INSERT INTO usuarios(${this:name}) VALUES(${this:csv}) RETURNING *", user)
+        return db.one("INSERT INTO usuarios(${this:name}) VALUES(${this:csv}) RETURNING *", foto ? user : {...user,foto})
           .then(usuario => {
             if(direcciones) {
               direcciones.forEach(dir => {
@@ -48,7 +72,14 @@ const resolvers = {
     },
     updateUsuario: (_, { id, input }, { db, update }) => {
       const { direcciones, foto, ...user} = input;
-    
+      const imgUrl = db.oneOrNone("SELECT foto FROM usuarios WHERE id=$1", [id]);
+      if(imgUrl){
+        deleteImage(imgUrl);
+      }
+      if(foto){
+        const image = uploadImage(foto);
+        foto = image.url
+      }
       return db.one(update(user, null, "usuarios") + " WHERE id=$1 RETURNING *", id)
         .then(usuario => {
           if(direcciones) {
@@ -64,6 +95,8 @@ const resolvers = {
         });
     },
     deleteUsuario: (_, { id }, { db }) => {
+      const imgUrl = db.oneOrNone("SELECT foto FROM usuarios WHERE id=$1", [id]);
+      deleteImage(imgUrl);
 	return db.none("DELETE FROM direcciones WHERE usuario_id=$1", id)
           .then(() =>
             db.one("DELETE FROM usuarios WHERE id=$1 RETURNING id", id)

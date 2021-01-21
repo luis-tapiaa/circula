@@ -11,6 +11,7 @@
   "license": "ISC",
   "dependencies": {
     "apollo-server": "^2.19.0",
+    "cloudinary": "^1.23.0",
     "dataloader": "^2.0.0",
     "dotenv": "^8.2.0",
     "graphql": "^15.4.0",
