@@ -77,10 +77,6 @@ const resolvers = {
       if(imgUrl){
         deleteImage(imgUrl);
       }
-      if(foto){
-        const image = uploadImage(foto);
-        foto = image.url
-      }
       return db.one(update(user, null, "usuarios") + " WHERE id=$1 RETURNING *", id)
         .then(usuario => {
           if(direcciones) {
