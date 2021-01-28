@@ -56,8 +56,11 @@ const resolvers = {
       const { direcciones, foto, ...user} = input;
       let photo = '';
       if(foto){
-        const image = await uploadImage(foto);
-        photo = image;
+        //const image = await uploadImage(foto);
+        const uploadedResponse = await cloudinary.uploader.upload(foto,{
+          upload_preset: 'devs'
+        });
+        photo = uploadedResponse.url;
       }
       return db.tx(t => {
         return db.one("INSERT INTO usuarios(${this:name}) VALUES(${this:csv}) RETURNING *", foto ? user : {...user,foto:photo})
