@@ -52,11 +52,11 @@ const resolvers = {
       db.one("SELECT * FROM usuarios WHERE id=$1 OR codigo=$2", [id, codigo]),
   },
   Mutation: {
-    createUsuario: (_, { input }, { db }) => {
+    createUsuario: async(_, { input }, { db }) => {
       const { direcciones, foto, ...user} = input;
       let photo = '';
       if(foto){
-        const image = uploadImage(foto);
+        const image = await uploadImage(foto);
         photo = image.url
       }
       return db.tx(t => {
