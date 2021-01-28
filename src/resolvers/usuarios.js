@@ -8,7 +8,8 @@ const uploadImage = async(foto)=> {
   const uploadedResponse = await cloudinary.uploader.upload(foto,{
     upload_preset: 'devs'
   });
-  return uploadedResponse.url;
+  console.log(uploadedResponse);
+  return uploadedResponse;
 }
 
 const deleteImage = async(imgUrl) =>{
@@ -56,11 +57,9 @@ const resolvers = {
       const { direcciones, foto, ...user} = input;
       let photo = '';
       if(foto){
-        //const image = await uploadImage(foto);
-        const uploadedResponse = await cloudinary.uploader.upload(foto,{
-          upload_preset: 'devs'
-        });
-        photo = uploadedResponse.url;
+        const image = await uploadImage(foto);
+        console.log(image);
+        photo = image.url;
       }
       return db.tx(t => {
         return db.one("INSERT INTO usuarios(${this:name}) VALUES(${this:csv}) RETURNING *", foto ? user : {...user,foto:photo})
