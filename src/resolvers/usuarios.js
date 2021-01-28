@@ -54,14 +54,13 @@ const resolvers = {
   Mutation: {
     createUsuario: (_, { input }, { db }) => {
       const { direcciones, foto, ...user} = input;
+      let photo = '';
       if(foto){
-        const uploadedResponse = await cloudinary.uploader.upload(foto,{
-          upload_preset: 'devs'
-        });
-        foto = uploadedResponse.url;
+        const image = uploadImage(foto);
+        photo = image.url
       }
       return db.tx(t => {
-        return db.one("INSERT INTO usuarios(${this:name}) VALUES(${this:csv}) RETURNING *", foto ? user : {...user,foto})
+        return db.one("INSERT INTO usuarios(${this:name}) VALUES(${this:csv}) RETURNING *", foto ? user : {...user,foto:photo})
           .then(usuario => {
             if(direcciones) {
               direcciones.forEach(dir => {
