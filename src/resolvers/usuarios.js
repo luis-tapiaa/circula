@@ -4,8 +4,8 @@ const bibliotecas = require("./loaders/bibliotecas");
 const grupos_usuario = require("./loaders/grupos_usuario");
 const { cloudinary } = require('../utils/cloudinary');
 
-const uploadImage = async(foto)=> {
-  const uploadImageUrl = await cloudinary.uploader.upload(foto,{
+const uploadImage = (foto)=> {
+  const uploadImageUrl = cloudinary.uploader.upload(foto,{
     upload_preset: 'devs'
   }).then( res => {
     return res;
@@ -54,11 +54,11 @@ const resolvers = {
       db.one("SELECT * FROM usuarios WHERE id=$1 OR codigo=$2", [id, codigo]),
   },
   Mutation: {
-    createUsuario: (_, { input }, { db }) => {
+    createUsuario: async(_, { input }, { db }) => {
       const { direcciones, foto, ...user} = input;
       let photo = '';
       if(foto){
-        const image = uploadImage(foto);
+        const image = await uploadImage(foto);
         photo = image.url;
       }
       return db.tx(t => {
