@@ -8,7 +8,7 @@ const uploadImage = async(foto)=> {
   await cloudinary.uploader.upload(foto,{
     upload_preset: 'devs'
   }).then( res => {
-    return res;
+    return res.url;
   });
 }
 
@@ -58,7 +58,7 @@ const resolvers = {
       let photo = '';
       if(foto){
         const image = await uploadImage(foto);
-        photo = image.url;
+        photo = image;
       }
       return db.tx(t => {
         return db.one("INSERT INTO usuarios(${this:name}) VALUES(${this:csv}) RETURNING *", foto ? user : {...user,foto:photo})
