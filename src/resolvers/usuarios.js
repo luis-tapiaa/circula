@@ -5,11 +5,11 @@ const grupos_usuario = require("./loaders/grupos_usuario");
 const { cloudinary } = require('../utils/cloudinary');
 
 const uploadImage = async(foto)=> {
-  const uploadedResponse = await cloudinary.uploader.upload(foto,{
+  await cloudinary.uploader.upload(foto,{
     upload_preset: 'devs'
+  }).then( res => {
+    return res;
   });
-  console.log(uploadedResponse);
-  return uploadedResponse;
 }
 
 const deleteImage = async(imgUrl) =>{
@@ -58,7 +58,6 @@ const resolvers = {
       let photo = '';
       if(foto){
         const image = await uploadImage(foto);
-        console.log(image);
         photo = image.url;
       }
       return db.tx(t => {
