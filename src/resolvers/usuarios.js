@@ -54,11 +54,13 @@ const resolvers = {
   Mutation: {
     createUsuario: async(_, { input }, { db }) => {
       const { direcciones, foto, ...user} = input;
-      /*if(foto){
-        const image = await uploadImage(foto);
-      }*/
+      let photoURL = '';
+      if(foto){
+        const url = await uploadImage(foto);
+        photoURL = url;
+      }
       return db.tx(t => {
-        return db.one("INSERT INTO usuarios(${this:name}) VALUES(${this:csv}) RETURNING *", foto ? user : {...user,foto: await uploadImage(foto)})
+        return db.one("INSERT INTO usuarios(${this:name}) VALUES(${this:csv}) RETURNING *", foto ? user : {...user,foto: photoURL})
           .then(usuario => {
             if(direcciones) {
               direcciones.forEach(dir => {
