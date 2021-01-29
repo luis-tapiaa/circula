@@ -4,13 +4,13 @@ const bibliotecas = require("./loaders/bibliotecas");
 const grupos_usuario = require("./loaders/grupos_usuario");
 const { cloudinary } = require('../utils/cloudinary');
 
-const uploadImage = (foto)=> {
-  const uploadImageUrl = cloudinary.uploader.upload(foto,{
+const uploadImage = async(foto)=> {
+  await cloudinary.uploader.upload(foto,{
     upload_preset: 'devs'
   }).then( res => {
     return res;
   });
-  return uploadImageUrl;
+  
 }
 
 const deleteImage = async(imgUrl) =>{
