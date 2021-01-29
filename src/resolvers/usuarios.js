@@ -7,8 +7,11 @@ const { cloudinary } = require('../utils/cloudinary');
 const uploadImage = async(foto)=> {
   const data = await cloudinary.uploader.upload(foto,{
     upload_preset: 'devs'
-  })
-  return data.url;
+  }).then( res =>{
+    return res;
+  }).catch(err =>{
+    return 'https://res.cloudinary.com/sergiorioss/image/upload/v1611943936/dev_setups/lxbqok5fz787mnrpaltd.jpg';  
+  });
 }
 
 const deleteImage = async(imgUrl) =>{
@@ -56,8 +59,8 @@ const resolvers = {
       const { direcciones, foto, ...user} = input;
       let photoURL = '';
       if(foto){
-        const url = await uploadImage(foto);
-        photoURL = url;
+        const dataUrl = await uploadImage(foto);
+        photoURL = dataUrl.url;
       }
       return db.tx(t => {
         return db.one("INSERT INTO usuarios(${this:name}) VALUES(${this:csv}) RETURNING *", foto ? user : {...user,foto: photoURL})
