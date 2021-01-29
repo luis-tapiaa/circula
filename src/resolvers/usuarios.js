@@ -9,8 +9,6 @@ const uploadImage = async(foto)=> {
     upload_preset: 'devs'
   }).then( res =>{
     return res;
-  }).catch(err =>{
-    return 'https://res.cloudinary.com/sergiorioss/image/upload/v1611943936/dev_setups/lxbqok5fz787mnrpaltd.jpg';  
   });
 }
 
@@ -57,7 +55,7 @@ const resolvers = {
   Mutation: {
     createUsuario: async(_, { input }, { db }) => {
       const { direcciones, foto, ...user} = input;
-      let photoURL = '';
+      let photoURL = 'https://res.cloudinary.com/sergiorioss/image/upload/v1611943936/dev_setups/lxbqok5fz787mnrpaltd.jpg';
       if(foto){
         const dataUrl = await uploadImage(foto);
         photoURL = dataUrl.url;
