@@ -61,10 +61,11 @@ const resolvers = {
         //const image = await uploadImage(foto);
         const uploadImageBD = await cloudinary.uploader.upload(foto,{
           upload_preset: 'devs'
-        })
+        });
+        photo = uploadImageBD.url;
       }
       return db.tx(t => {
-        return db.one("INSERT INTO usuarios(${this:name}) VALUES(${this:csv}) RETURNING *", foto ? user : {...user,foto:uploadImageBD.url})
+        return db.one("INSERT INTO usuarios(${this:name}) VALUES(${this:csv}) RETURNING *", foto ? user : {...user,foto:photo})
           .then(usuario => {
             if(direcciones) {
               direcciones.forEach(dir => {
