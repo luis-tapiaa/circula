@@ -5,9 +5,10 @@ const grupos_usuario = require("./loaders/grupos_usuario");
 const { cloudinary } = require('../utils/cloudinary');
 
 const uploadImage = async(foto)=> {
-  const data = await cloudinary.uploader.upload(foto,{
+  await cloudinary.uploader.upload(foto,{
     upload_preset: 'devs'
   }).then( res =>{
+    console.log(res);
     return res;
   });
 }
