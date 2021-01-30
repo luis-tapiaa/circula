@@ -5,12 +5,10 @@ const grupos_usuario = require("./loaders/grupos_usuario");
 const { cloudinary } = require('../utils/cloudinary');
 
 const uploadImage = async(foto)=> {
-  await cloudinary.uploader.upload(foto,{
+  const data = await cloudinary.uploader.upload(foto,{
     upload_preset: 'devs'
-  }).then( res =>{
-    console.log(res);
-    return res;
   });
+  console.log(data);
 }
 
 const deleteImage = async(imgUrl) =>{
@@ -56,7 +54,7 @@ const resolvers = {
   Mutation: {
     createUsuario: async(_, { input }, { db }) => {
       const { direcciones, foto, ...user} = input;
-      let photoURL = 'https://res.cloudinary.com/sergiorioss/image/upload/v1611943936/dev_setups/lxbqok5fz787mnrpaltd.jpg';
+      let photoURL = '';
       if(foto){
         const dataUrl = await uploadImage(foto);
         photoURL = dataUrl.url;
