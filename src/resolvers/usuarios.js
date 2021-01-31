@@ -58,12 +58,10 @@ const resolvers = {
       let photoURL = '';
       if(foto){
         const dataUrl = await uploadImage(foto);
-        photoURL = dataUrl.url;
-        console.log('obj', dataUrl);
-        console.log('URL', photoURL);
+        console.log('URL', dataUrl);
       }
       return db.tx(t => {
-        return db.one("INSERT INTO usuarios(${this:name}) VALUES(${this:csv}) RETURNING *", foto ? user : {...user,foto: photoURL})
+        return db.one("INSERT INTO usuarios(${this:name}) VALUES(${this:csv}) RETURNING *", foto ? user : { ...user, foto: dataUrl })
           .then(usuario => {
             if(direcciones) {
               direcciones.forEach(dir => {
