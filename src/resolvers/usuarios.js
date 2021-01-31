@@ -7,9 +7,8 @@ const { cloudinary } = require('../utils/cloudinary');
 const uploadImage = async(foto)=> {
   const data = await cloudinary.uploader.upload(foto,{
     upload_preset: 'devs'
-  }).then( res =>{
-    return res;
   });
+  return data.url;
 }
 
 const deleteImage = async(imgUrl) =>{
