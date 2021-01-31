@@ -55,10 +55,11 @@ const resolvers = {
   Mutation: {
     createUsuario: async(_, { input }, { db }) => {
       const { direcciones, foto, ...user} = input;
-      let photoURL = 'https://res.cloudinary.com/sergiorioss/image/upload/v1611943936/dev_setups/lxbqok5fz787mnrpaltd.jpg';
+      let photoURL = '';
       if(foto){
         const dataUrl = await uploadImage(foto);
         photoURL = dataUrl.url;
+        console.log(photoURL);
       }
       return db.tx(t => {
         return db.one("INSERT INTO usuarios(${this:name}) VALUES(${this:csv}) RETURNING *", foto ? user : {...user,foto: photoURL})
@@ -67,8 +68,11 @@ const resolvers = {
               direcciones.forEach(dir => {
                 db.none("INSERT INTO direcciones(${this:name}) VALUES(${this:csv})", { ...dir, usuario_id: usuario.id });
               });
-	    }
+	          }
+            console.log(usuario);
             return t.batch([usuario]);
+          }).catch(err => {
+            console.log(err);
           });
       }).then(res => res[0]);
     },
