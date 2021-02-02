@@ -109,12 +109,6 @@ const resolvers = {
   Usuario: {
     biblioteca: (_) => bibliotecas.load(_.biblioteca_id),
     grupo_usuario: (_) => grupos_usuario.load(_.grupo_usuario_id),
-    foto: (_, args, { db }) =>
-      db.oneOrNone("SELECT encode(img, 'base64') FROM usuarios_imagen WHERE usuario_id=$1", _.id)
-        .then(res => {
-          if (res) return res.encode;
-          return null;
-        }),
     direcciones: (_, args, { db }) =>
       db.any("SELECT * FROM direcciones WHERE usuario_id =$1", _.id),
     prestamos: (_, args, { db }) =>
