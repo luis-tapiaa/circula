@@ -8,7 +8,8 @@ const uploadImage = async(foto)=> {
   const data = await cloudinary.uploader.upload(foto,{
     upload_preset: 'devs'
   });
-  return data.public_id;
+  //return data.public_id;
+  return data.url;
 }
 
 const deleteImage = async(imgUrl) =>{
