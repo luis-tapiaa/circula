@@ -16,7 +16,7 @@ const types = gql`
 `;
 
 const queries = `
-  bloqueos: [Bloqueos]!
+  bloqueos(id:ID!):[Bloqueo]!
 `;
 
 const mutations = `
