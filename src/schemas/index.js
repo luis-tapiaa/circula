@@ -34,6 +34,7 @@ const root = gql`
     ${registros.queries}
     ${tipos_item.queries}
     ${usuarios.queries}
+    ${bloqueos.queries}
   }
 
   type Mutation {
