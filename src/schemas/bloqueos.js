@@ -15,10 +15,14 @@ const types = gql`
   }
 `;
 
+const queries = `
+  bloqueos: [Bloqueos]!
+`;
+
 const mutations = `
   createBloqueo(input: BloqueoInput): Bloqueo
   updateBloqueo(id: ID!, input: BloqueoInput): Bloqueo
   deleteBloqueo(id: ID): Bloqueo
 `;
 
-module.exports = { types, mutations };
+module.exports = { types, queries ,mutations };
