@@ -60,9 +60,6 @@ const resolvers = {
         url = await uploadImage(foto);
         user.foto = url;
       }
-
-      console.log('URL', url);
-      console.log('usr', user);
       return db.tx(t => {
         return db.one("INSERT INTO usuarios(${this:name}) VALUES(${this:csv}) RETURNING *", user)
           .then(usuario => {
@@ -78,11 +75,11 @@ const resolvers = {
           });
       }).then(res => res[0]);
     },
-    updateUsuario: (_, { id, input }, { db, update }) => {
+    updateUsuario: async(_, { id, input }, { db, update }) => {
       const { direcciones, foto, ...user} = input;
       const imgUrl = db.oneOrNone("SELECT foto FROM usuarios WHERE id=$1", [id]);
       if(imgUrl){
-        deleteImage(imgUrl);
+        await deleteImage(imgUrl);
       }
       if(foto){
         url = await uploadImage(foto);
