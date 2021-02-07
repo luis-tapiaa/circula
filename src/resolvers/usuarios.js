@@ -1,4 +1,5 @@
 require("dotenv").config();
+const { ApolloError } = require("apollo-server");
 const jwt = require("jsonwebtoken");
 const bibliotecas = require("./loaders/bibliotecas");
 const grupos_usuario = require("./loaders/grupos_usuario");
@@ -47,7 +48,13 @@ const resolvers = {
       const { limit = 5, offset = 0, filter = "", sort = "" } = input || {};
       
       return db.any("SELECT * FROM usuarios " + filter + " " + sort
-        + " LIMIT $1 OFFSET $2", [limit, offset]);
+        + " LIMIT $1 OFFSET $2", [limit, offset]).then(res => {
+          console.log(res.length);
+          if (!res.length) {
+            throw new ApolloError("No hay mas datos.");
+          }
+          return res;
+        });
     },
     usuario: (_, { id, codigo }, { db }) =>
       db.one("SELECT * FROM usuarios WHERE id=$1 OR codigo=$2", [id, codigo]),
