@@ -6,12 +6,14 @@ const types = gql`
     codigo: String
     nombre: String
     biblioteca: Biblioteca
+    staff: Boolean
   }
 
   input GrupoUsuarioInput {
     codigo: String
     nombre: String
     biblioteca_id: ID
+    staff: String
   }
 `;
 
