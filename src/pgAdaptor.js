@@ -8,7 +8,7 @@ const pgp = pgPromise({
 
 const config = {
   connectionString: process.env.POSTGRES_URL,
-  ssl: { rejectUnauthorized: false },
+//  ssl: { rejectUnauthorized: false },
 };
 
 const db = pgp(config);

@@ -1,27 +1,8 @@
-const bibliotecas = require("./bibliotecas");
-const bloqueos = require("./bloqueos");
-const cuentas = require("./cuentas");
-const grupos_usuario = require("./grupos_usuario");
-const items = require('./items');
-const multas = require('./multas');
-const politicas = require('./politicas');
-const prestamos = require('./prestamos');
-const registros_bib = require("./registros_bib");
-const tipos_item = require('./tipos_item');
-const usuarios = require("./usuarios");
+const resolvers = [];
+const path = require('path').join(__dirname, '.');
 
-const resolvers = [
-    bibliotecas,
-    bloqueos,
-    cuentas,
-    grupos_usuario,
-    items,
-    multas,
-    politicas,
-    prestamos,
-    registros_bib,
-    tipos_item,
-    usuarios
-];
+require('fs').readdirSync(path).forEach(function (file) {
+  if (file !== 'loaders' && file !== 'index.js') resolvers.push(require('./' + file));
+});
 
 module.exports = resolvers;
