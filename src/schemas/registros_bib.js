@@ -3,12 +3,24 @@ const { gql } = require("apollo-server");
 const types = gql`
   type Registro {
     id: ID!
-    marc: JSON
+    autor: String
+    titulo: String
+    tipo_item: TipoItem
+    isbn_issn: String
+    editorial: String
+    l_publicacion: String
+    f_publicacion: Date
     items: [Item]!
   }
 
   input RegistroInput {
-    marc: String
+    autor: String
+    titulo: String
+    tipo_item_id: ID
+    isbn_issn: String
+    editorial: String
+    l_publicacion: String
+    f_publicacion: Date
   }
 `;
 
