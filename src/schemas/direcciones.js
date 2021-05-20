@@ -1,4 +1,4 @@
-const { gql } = require("apollo-server");
+const { gql } = require('apollo-server');
 
 const types = gql`
   type Direccion {
@@ -7,7 +7,7 @@ const types = gql`
     direccion2: String
     estado: String
     c_postal: String
-    pais_iso: String
+    municipio: String
   }
 
   input DireccionInput {
@@ -16,7 +16,7 @@ const types = gql`
     direccion2: String
     estado: String
     c_postal: String
-    pais_iso: String
+    municipio: String
   }
 `;
 

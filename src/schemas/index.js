@@ -1,11 +1,14 @@
 const { gql } = require('apollo-server');
 
 const schemas = [];
-const path = require('path').join(__dirname, '.');
 
-require('fs').readdirSync(path).forEach(function (file) {
-  if (file !== 'index.js') schemas.push(require('./' + file));
-});
+require('fs')
+  .readdirSync(__dirname)
+  .forEach(function (file) {
+    if (file !== 'index.js') {
+      schemas.push(require('./' + file));
+    }
+  });
 
 let query = '';
 let mutation = '';

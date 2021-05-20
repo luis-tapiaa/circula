@@ -1,10 +1,6 @@
-require("dotenv").config();
-const pgPromise = require("pg-promise");
-const pgp = pgPromise({
-  query: (e) => {
-    console.log('QUERY', e.query);
-  }
-});
+require('dotenv').config();
+const pgPromise = require('pg-promise');
+const pgp = pgPromise({});
 
 const config = {
   connectionString: process.env.POSTGRES_URL,

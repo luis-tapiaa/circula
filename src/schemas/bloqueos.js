@@ -1,4 +1,4 @@
-const { gql } = require("apollo-server");
+const { gql } = require('apollo-server');
 
 const types = gql`
   type Bloqueo {
@@ -16,7 +16,7 @@ const types = gql`
 `;
 
 const queries = `
-  bloqueos(id:ID!):[Bloqueo]!
+  bloqueos(id:ID!): [Bloqueo]!
 `;
 
 const mutations = `
@@ -25,4 +25,4 @@ const mutations = `
   deleteBloqueo(id: ID): Bloqueo
 `;
 
-module.exports = { types, queries ,mutations };
+module.exports = { types, queries, mutations };

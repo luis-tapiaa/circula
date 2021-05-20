@@ -1,11 +1,11 @@
-const { db } = require("../../pgAdaptor");
-const DataLoader = require("dataloader");
+const { db } = require('../../pgAdaptor');
+const DataLoader = require('dataloader');
 
-const fetchAllKeys = (keys) => {
+const fetchAllKeys = keys => {
   return db.any('SELECT * FROM grupos_usuario WHERE id IN ($1:csv)', [keys]);
 };
 
-const batchGrupos = async (keys) => {
+const batchGrupos = async keys => {
   const results = await fetchAllKeys(keys);
   return results;
 };

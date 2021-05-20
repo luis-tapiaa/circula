@@ -1,20 +1,20 @@
-const { gql } = require("apollo-server");
+const { gql } = require('apollo-server');
 
-const types = gql`  
+const types = gql`
   type Item {
     id: ID!
     codigo: String
-    registro: Registro,
+    registro: Registro
     f_adquisicion: Date
     estado_item: String
     ubicacion: String
     precio: Float
-    biblioteca: Biblioteca    
+    biblioteca: Biblioteca
   }
 
   input ItemInput {
     codigo: String
-    registro_bib_id: ID,
+    registro_bib_id: ID
     f_adquisicion: String
     estado_item: String
     ubicacion: String

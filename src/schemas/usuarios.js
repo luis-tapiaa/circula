@@ -1,4 +1,4 @@
-const { gql } = require("apollo-server");
+const { gql } = require('apollo-server');
 
 const types = gql`
   type Auth {
@@ -24,7 +24,8 @@ const types = gql`
     celular: String
     usuario: String
     password: String
-    foto: File
+    foto: String
+    bloqueos: [Bloqueo]!
     prestamos: [Prestamo]!
     cuentas: [Cuenta]!
   }

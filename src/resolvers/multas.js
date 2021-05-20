@@ -1,20 +1,19 @@
-const bibliotecas = require("./loaders/bibliotecas");
+const { db, update } = require('../pgAdaptor');
+const bibliotecas = require('./loaders/bibliotecas');
 
 const resolvers = {
   Query: {
-    multas: (_, args, { db }) => db.any("SELECT * FROM multas"),
+    multas: () => db.any('SELECT * FROM multas'),
   },
   Mutation: {
-    createMulta: (_, { input }, { db }) =>
-      db.one("INSERT INTO multas(${this:name}) VALUES(${this:csv}) RETURNING *", input),
-    updateMulta: (_, { input, id }, { db, update }) =>
-      db.one(update(input, null, "multas") + " WHERE id=$1 RETURNING *", id),
-    deleteMulta: (_, { id }, { db }) =>
-      db.one("DELETE FROM multas WHERE id=$1 RETURNING id", id)
+    createMulta: (_, { input }) =>
+      db.one('INSERT INTO multas(${this:name}) VALUES(${this:csv}) RETURNING *', input),
+    updateMulta: (_, { input, id }) =>
+      db.one(update(input, null, 'multas') + ' WHERE id=$1 RETURNING *', id),
+    deleteMulta: (_, { id }) => db.one('DELETE FROM multas WHERE id=$1 RETURNING id', id),
   },
   Multa: {
-    biblioteca: ({ biblioteca_id }) =>
-      biblioteca_id ? bibliotecas.load(biblioteca_id) : null,
+    biblioteca: ({ biblioteca_id }) => (biblioteca_id ? bibliotecas.load(biblioteca_id) : null),
   },
 };
 

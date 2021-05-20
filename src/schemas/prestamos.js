@@ -1,9 +1,9 @@
-const { gql } = require("apollo-server");
+const { gql } = require('apollo-server');
 
 const types = gql`
   type Prestamo {
     id: ID!
-    item: Item   
+    item: Item
     f_prestamo: Date
     f_vencimiento: Date
     f_devolucion: Date
@@ -12,8 +12,8 @@ const types = gql`
   }
 
   input PrestamoInput {
-    usuario_id: ID    
-    item_id: ID    
+    usuario_id: ID
+    item_id: ID
     f_prestamo: String
     f_vencimiento: String
     f_devolucion: String
