@@ -13,7 +13,7 @@ const resolvers = {
     deleteItem: (_, { id }) => db.one('DELETE FROM items WHERE id=$1 RETURNING id', id),
   },
   Item: {
-    biblioteca: () => bibliotecas.load(_.biblioteca_id),
+    biblioteca: (_) => bibliotecas.load(_.biblioteca_id),
     registro: ({ registro_bib_id }) =>
       db.one('SELECT * FROM registros_bib WHERE id=$1', registro_bib_id),
   },
