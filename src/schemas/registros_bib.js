@@ -9,7 +9,7 @@ const types = gql`
     isbn_issn: String
     editorial: String
     l_publicacion: String
-    f_publicacion: Date
+    f_publicacion: String
     items: [Item]!
   }
 
@@ -20,7 +20,7 @@ const types = gql`
     isbn_issn: String
     editorial: String
     l_publicacion: String
-    f_publicacion: Date
+    f_publicacion: String
   }
 `;
 
